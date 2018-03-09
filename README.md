@@ -17,3 +17,5 @@ Description: Construction method of nested resolvable designs from a projective 
     are based on <https://eudml.org/doc/219563> and A. Boudraa et al. (See references).
     
 License: GPL-3
+
+[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/PGM2)](http://cran.rstudio.com/package=PGM2)
