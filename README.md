@@ -10,7 +10,7 @@ Date: 2016-12-17
 
 Author: Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi
 
-URL: www.sites.google.com/site/mohamedlaibwebpage
+URL: https://mlaib.github.io/
 
 Description: Construction method of nested resolvable designs from a projective geometry defined on Galois field of order 2. The obtained
     Resolvable designs are used to build uniform design. The presented results
