@@ -7,9 +7,9 @@
 #' @param mat The matrix of the RBIBD.
 #' @return A LIST of:
 #' \enumerate{
-#'  \item \code{n }{Number of experiments.}
-#'  \item \code{F }{The dimension of the design.}
-#'  \item \code{UD }{The configuration of the uniform design.}
+#'  \item[\code{n}] Number of experiments.
+#'  \item[\code{F}] The dimension of the design.
+#'  \item[\code{UD}] The configuration of the uniform design.
 #' }
 #' @author Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi
 #' @references Fang.K.T et al., Constructions of uniform designs by

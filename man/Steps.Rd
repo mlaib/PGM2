@@ -37,10 +37,9 @@ list3<-Steps(4,1,c('S1','S4')) #Get the first & the last stage : of the PG(4,2)
 list4<-Steps(4,1,'S4') #Get the last stage : of the PG(4,2)
 }
 }
-\author{
-Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi
-}
 \references{
 Gheribi-Aoulmi. Z and M. Bousseboua Recursive methods for construction of balanced n-ary block designs. Serdica Math.J (31), 2005,189-200
 }
-
+\author{
+Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi
+}

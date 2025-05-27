@@ -4,12 +4,9 @@
 \name{PGM2-package}
 \alias{PGM2}
 \alias{PGM2-package}
-\title{Nested Resolvable Designs and their Associated Uniform Designs}
+\title{PGM2: Recursive Construction of Nested Resolvable Designs and Associated Uniform Designs}
 \description{
-Construction method of nested resolvable designs from
-a projective geometry defined on Galois field of order 2. The obtained
-Resolvable designs are used to build uniform design. The presented results
-are based on <https://eudml.org/doc/219563> and A. Boudraa et al. (See references).
+This package implements recursive construction methods for balanced incomplete block designs (BIBDs), their second generation, resolvable BIBDs (RBIBDs), and uniform designs (UDs) derived from projective geometries over GF(2). It enables extraction of nested structures in multiple stages and supports recursive resolution processes, as introduced in Boudraa et al. (2013).
 }
 \note{
 This work established in same time with the article intitled:
@@ -50,13 +47,6 @@ A<-unique(x1)
 UD<-Uniform(A)
 }
 }
-\author{
-Mohamed Laib,
-Abla Boudraa and
-Zebida Gheribi-Aoulmi
-
-Maintainer: Mohamed Laib \email{laib.med@gmail.com}
-}
 \references{
 D. Dugué Traité de statistique théorique et appliquée, Masson et Cie, 1958.
 
@@ -73,4 +63,17 @@ Issue 2 (2013).
 Fang.K.T et al., Construction of uniform designs via super-simple
 resolvable t-designs. Util. Math. (66).2004, 15-32.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://mlaib.net}
+}
 
+}
+\author{
+Mohamed Laib,
+Abla Boudraa and
+Zebida Gheribi-Aoulmi
+
+Maintainer: Mohamed Laib \email{laib.med@gmail.com}
+}

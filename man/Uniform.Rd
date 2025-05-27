@@ -12,9 +12,9 @@ Uniform(mat)
 \value{
 A LIST of:
 \enumerate{
- \item \code{n }{Number of experiments.}
- \item \code{F }{The dimension of the design.}
- \item \code{UD }{The configuration of the uniform design.}
+ \item[\code{n}] Number of experiments.
+ \item[\code{F}] The dimension of the design.
+ \item[\code{UD}] The configuration of the uniform design.
 }
 }
 \description{
@@ -34,9 +34,6 @@ Y<-Resolvable(n,mat)
 ud<-Uniform(Y$RBIB)  #Uniform design
 }
 }
-\author{
-Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi
-}
 \references{
 Fang.K.T et al., Constructions of uniform designs by
 using resolvable packings and coverings. Discrete Math. (19), 2003, 692-711.
@@ -44,4 +41,6 @@ using resolvable packings and coverings. Discrete Math. (19), 2003, 692-711.
 Fang.K.T et al., Construction of uniform designs via super-simple
 resolvable t-designs. Util. Math. (66).2004, 15-32.
 }
-
+\author{
+Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi
+}

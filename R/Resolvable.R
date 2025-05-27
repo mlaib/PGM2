@@ -8,11 +8,11 @@
 #' @param mat The matrix of the BIB.
 #' @return A LIST of:
 #' \enumerate{
-#'  \item \code{V }{Number of treatments in the RBIBD.}
-#'  \item \code{B }{Number of blocks of the RBIBD.}
-#'  \item \code{R }{Repetition of each treatment.}
-#'  \item \code{K }{Size of each block.}
-#'  \item \code{BIB }{The configuration of the RBIBD.}
+#'  \item[\code{V}] Number of treatments in the RBIBD.
+#'  \item[\code{B}] Number of blocks of the RBIBD.
+#'  \item[\code{R}] Repetition of each treatment.
+#'  \item[\code{K}] Size of each block.
+#'  \item[\code{BIB}] The configuration of the RBIBD.
 #' }
 #' @author Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi
 #' @references D. Dugué Traité de statistique théorique et appliquée, Masson et Cie, 1958.

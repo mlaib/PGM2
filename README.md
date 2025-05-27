@@ -3,9 +3,9 @@ R package
 
 Title: Nested Resolvable Designs and their Associated Uniform Designs
 
-Version: 1.0-1
+Version: 1.2
 
-Date: 2016-12-17
+Date: 2025-05-27
 
 
 Author: Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi
