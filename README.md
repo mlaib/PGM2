@@ -58,8 +58,4 @@ s3 <- Steps(3, 1, p = 3)     # PG(3, 3)
 See the vignette — `vignette("PGM2-paper")` — which reproduces all worked
 examples and both parameter tables of the 2013 paper.
 
-## Authors
-
-Mohamed Laib (maintainer), Abla Boudraa and Zebida Gheribi-Aoulmi.
-
 License: GPL-3
