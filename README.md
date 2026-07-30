@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/grand-total/PGM2)](https://cran.r-project.org/package=PGM2)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1161718.svg)](https://doi.org/10.5281/zenodo.1161718)
 <!-- badges: end -->
 
 Recursive construction of **nested resolvable designs** and their
