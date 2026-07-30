@@ -15,8 +15,8 @@ library(PGM2)
 ```
 
 This vignette reproduces, with the current version of **PGM2**, all the
-worked examples and both parameter tables of the paper that the package
-implements [@boudraa2013]:
+worked examples, and the first-generation rows of both parameter tables,
+of the paper that the package implements [@boudraa2013]:
 
 > A. Boudraa, Z. Gheribi-Aoulmi and M. Laib (2013). *Recursive method for
 > construction of resolvable nested designs and uniform designs associated.*

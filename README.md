@@ -55,7 +55,9 @@ s <- Steps(4, 1)             # PG(4, 2): stages S1..S4
 s3 <- Steps(3, 1, p = 3)     # PG(3, 3)
 ```
 
-See the vignette — `vignette("PGM2-paper")` — which reproduces all worked
-examples and both parameter tables of the 2013 paper.
+See the vignette, `vignette("PGM2-paper")`, which reproduces the worked
+examples of the 2013 paper together with the first-generation BIBD, RBIBD
+and uniform-design rows of both of its parameter tables, and selected
+reduced-design rows.
 
 License: GPL-3
