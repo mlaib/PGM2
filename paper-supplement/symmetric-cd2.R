@@ -95,9 +95,16 @@ col_perms <- function(before, after, q) {
     pm
   })
 }
-rand_utype <- function(n, s, q) {
+rand_utype <- function(n, s, q, max_try = 2000) {
+  # U-type design with all runs distinct: a design with repeated runs is
+  # degenerate as a comparator, so such draws are rejected and redrawn.
   base <- rep(seq_len(q), each = n / q)
-  vapply(seq_len(s), function(j) sample(base), integer(n))
+  for (i in seq_len(max_try)) {
+    D <- vapply(seq_len(s), function(j) sample(base), integer(n))
+    if (!anyDuplicated(D)) return(D)
+  }
+  stop("could not draw a U-type design with distinct runs for ",
+       sprintf("N=%d, s=%d, q=%d", n, s, q), call. = FALSE)
 }
 
 configs <- list(c(3, 1, 2), c(3, 2, 2), c(4, 1, 2), c(4, 2, 2), c(4, 3, 2),
