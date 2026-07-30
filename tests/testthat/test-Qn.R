@@ -51,16 +51,23 @@ test_that("Qn stage 1 is the stage-1 design of Resolvable + Uniform", {
   }
 })
 
-test_that("levels refine across stages (PG(3,2): stage 1 vs stage 2)", {
+test_that("levels refine across stages with the exact multiplicities (PG(3,2))", {
   Q1 <- Qn(3, 1); Q2 <- Qn(3, 2)
-  # every stage-1 factor (2 levels) must be a coarsening of at least one
-  # stage-2 factor (4 levels): each stage-2 level maps into one stage-1 level
   refines <- function(fine, coarse)
     all(rowSums(table(fine, coarse) > 0) == 1)
+  # each stage-1 factor (dim-2 subspace W) is refined by exactly
+  # (2^2 - 1)/(2 - 1) = 3 stage-2 factors (dim-1 subspaces W' of W)
   for (j1 in seq_len(Q1$R)) {
-    hit <- any(vapply(seq_len(Q2$R), function(j2)
+    hits <- sum(vapply(seq_len(Q2$R), function(j2)
       refines(Q2$UD[, j2], Q1$UD[, j1]), logical(1)))
-    expect_true(hit, label = sprintf("stage-1 factor %d refined", j1))
+    expect_equal(hits, 3, label = sprintf("stage-1 factor %d refiners", j1))
+  }
+  # each stage-2 factor refines exactly (2^(3-2+1) - 1)/(2 - 1) = 3
+  # stage-1 factors (dim-2 subspaces containing W')
+  for (j2 in seq_len(Q2$R)) {
+    hits <- sum(vapply(seq_len(Q1$R), function(j1)
+      refines(Q2$UD[, j2], Q1$UD[, j1]), logical(1)))
+    expect_equal(hits, 3, label = sprintf("stage-2 factor %d coarsenings", j2))
   }
 })
 
