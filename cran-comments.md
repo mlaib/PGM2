@@ -1,60 +1,59 @@
 # PGM2 2.0.1 — CRAN submission comments
 
-## Note on the 2.0.0 submission
+## Reason for this release
 
-Version 2.0.0 was submitted a short time ago. Before it was processed we
-found a defect in `Uniform()` and are replacing that submission with
-2.0.1. Please discard 2.0.0.
+This is a bug-fix release following 2.0.0, published a few days ago. It
+corrects a defect in `Uniform()` that we found after that release.
 
-`Uniform()` extracted parallel classes by a first-fit greedy scan, which
-could fail on a valid resolvable design presented in an unfavourable row
-order: of 200 random row permutations of one design shipped in the
-package vignette, 178 raised an error. The resolution is now found by an
-exact-cover search with backtracking, the function validates its input,
-and regression tests cover row-permutation invariance. Designs produced
-by the package's own constructors are unchanged.
+`Uniform()` extracted the parallel classes of a resolvable design by a
+first-fit greedy scan. That procedure can become trapped even when a
+resolution exists, so the function was dependent on the order of the rows
+of its input: of 200 random row permutations of one design shipped in the
+package vignette, 178 failed with `replacement has length zero`. The
+resolution is now found by an exact-cover search with backtracking over
+the whole partition; all 200 permutations succeed and give the same
+design up to a permutation of the factors and a relabelling of levels,
+and the function validates its input rather than returning a partial
+design. Regression tests cover row-permutation invariance, a resolvable
+design from outside the package, and non-resolvable input.
 
-## Summary of changes
+Designs produced by the package's own constructors are unchanged, and
+`BIB()`, `Gen()`, `Resolvable()`, `Qn()` and `Steps()` are unaffected.
 
-Major update of a package first released in 2014 (last update 1.2,
-2025-05-27). The construction is generalised from GF(2) to GF(p) for any
-prime p, with a `p` argument added to `BIB()` and `Steps()` (default
-`p = 2`). A new function `Qn()` builds the reduced resolvable designs and
-their uniform designs directly. The release also adds a testthat suite, a
-vignette reproducing the underlying 2013 paper, argument validation, and
-a faster subspace enumeration.
-
-Two user-visible changes relative to 1.2, both documented in NEWS.md:
-
-* `Steps()` returns a named list with one element per stage instead of
-  the flat, partially unnamed list of previous versions, and `BIB()`
-  gains a `Lambda` element. The design matrices returned for `p = 2` are
-  unchanged, which is enforced by a regression test against the 1.2
-  algorithm.
-* `Gen()`, `Resolvable()` and `Steps()` now validate the block index and
-  report the admissible range. Previously an out-of-range index failed
-  with `subscript out of bounds`; in `Steps()` this affected every index
-  greater than p^2 + p + 1, since the same index is used at each stage
-  while the number of blocks decreases along the recursion.
+Also in this release: `Steps()` rejects unknown or empty `stage` values
+instead of silently returning an empty list; the `Qn()` complexity note
+covers the labelling step as well as the subspace enumeration; the
+Plackett-Burman identification on the `Qn()` help page is stated up to
+row, column and level equivalence; and the now-unused `stats` import has
+been dropped from Imports.
 
 ## Test environments
 
-* Local Linux, R 4.3.3
+* Local Linux (Ubuntu 24.04), R 4.3.3
 * GitHub Actions: ubuntu-latest (R release and R devel), windows-latest,
-  macos-latest — all passing.
+  macos-latest
 
 ## R CMD check results
 
-0 errors | 0 warnings | 2 notes
+0 errors | 0 warnings | 3 notes
 
-Both notes are properties of the local check environment rather than the
-package, and neither appears on the GitHub Actions runs:
+The notes are:
 
-* "unable to verify current time" (no network clock in the local
-  sandbox);
+* "Days since last update: N", because 2.0.0 was released very recently.
+  This release exists to fix the defect described above; we are glad to
+  delay it if the CRAN team prefers.
+* "unable to verify current time" — no network clock in the local
+  sandbox.
 * "Skipping checking HTML validation: no command 'tidy' found" and
-  "package 'V8' unavailable" (optional HTML-manual validation tools are
-  not installed locally).
+  "package 'V8' unavailable" — the optional HTML-manual validation tools
+  are not installed locally.
+
+None of the three appears on the GitHub Actions runs.
+
+## Tests
+
+The testthat suite contains 24 blocks and 485 expectations, all passing,
+including the new row-permutation invariance tests for `Uniform()`.
 
 ## Reverse dependencies
 
