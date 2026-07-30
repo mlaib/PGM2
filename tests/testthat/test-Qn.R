@@ -77,3 +77,20 @@ test_that("Qn validates its arguments", {
   expect_error(Qn(1, 1), "m")
   expect_error(Qn(3, 1, p = 4), "prime")
 })
+
+test_that("subspace enumeration is exact and distinct (RREF canonical form)", {
+  for (cs in list(c(3,2,1), c(4,2,2), c(4,2,3), c(5,2,2), c(4,3,2), c(3,5,2))) {
+    m <- cs[1]; p <- cs[2]; d <- cs[3]
+    S <- PGM2:::subspaces(m, p, d)
+    expect_equal(length(S), PGM2:::gaussian_binom(m, d, p))
+    keys <- vapply(S, function(W)
+      paste(sort(apply(W, 1, paste, collapse = ",")), collapse = "|"), character(1))
+    expect_equal(length(unique(keys)), length(S))
+    expect_true(all(vapply(S, nrow, integer(1)) == p^d))
+    # each is closed under addition (is a subspace)
+    W <- S[[1]]
+    sums <- unique((W[rep(seq_len(nrow(W)), nrow(W)), ] +
+                    W[rep(seq_len(nrow(W)), each = nrow(W)), ]) %% p)
+    expect_equal(nrow(sums), nrow(W))
+  }
+})

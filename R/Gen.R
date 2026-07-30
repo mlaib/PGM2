@@ -6,7 +6,8 @@
 #' plays the role of a lower-dimensional projective geometry and the
 #' intersections are its hyperplanes.
 #'
-#' @param n Index of the block (sub-variety) to be deleted.
+#' @param n Index of the block (sub-variety) to be deleted; an integer
+#'   between 1 and \code{nrow(mat)}.
 #' @param mat The matrix of the BIBD (rows are blocks), e.g. the \code{BIB}
 #'   component returned by \code{\link{BIB}}.
 #' @return A list with components:
@@ -38,6 +39,8 @@
 #' Y2$V; Y2$K
 #' @export
 Gen <- function(n, mat) {
+  check_design_matrix(mat)
+  n <- check_block_index(n, nrow(mat))
   A <- mat[n, ]
   B <- mat[-n, , drop = FALSE]
   rows <- lapply(seq_len(nrow(B)), function(i) B[i, ][B[i, ] %in% A])

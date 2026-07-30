@@ -9,7 +9,10 @@ Steps(m, n, stage = "all", p = 2)
 \arguments{
 \item{m}{Dimension of the projective geometry (an integer, \code{m >= 2}).}
 
-\item{n}{Index of the block (sub-variety) to be deleted at each stage.}
+\item{n}{Index of the block (sub-variety) to be deleted at each stage.
+The same index is used at every stage, and the number of blocks shrinks
+along the recursion, so \code{n} must not exceed the block count of the
+last stage, \eqn{p^2 + p + 1} (the design of PG(2, p)).}
 
 \item{stage}{Stages wanted, a character vector (default \code{"all"}):
 \describe{

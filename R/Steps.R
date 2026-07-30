@@ -8,6 +8,9 @@
 #'
 #' @param m Dimension of the projective geometry (an integer, \code{m >= 2}).
 #' @param n Index of the block (sub-variety) to be deleted at each stage.
+#'   The same index is used at every stage, and the number of blocks shrinks
+#'   along the recursion, so \code{n} must not exceed the block count of the
+#'   last stage, \eqn{p^2 + p + 1} (the design of PG(2, p)).
 #' @param stage Stages wanted, a character vector (default \code{"all"}):
 #'   \describe{
 #'    \item{\code{'S1'}}{The first-generation BIBD.}
@@ -47,6 +50,15 @@
 #' @export
 Steps <- function(m, n, stage = "all", p = 2) {
   p <- check_prime(p)
+  nb_min <- p^2 + p + 1                 # blocks of PG(2, p), the last stage
+  if (length(n) != 1L || is.na(n) || !is.numeric(n) || n != round(n) ||
+      n < 1 || n > nb_min)
+    stop("'n' must be a single block index between 1 and ", nb_min,
+         ": the same block index is deleted at every stage, and the last ",
+         "stage is the design of PG(2, ", p, "), which has only ", nb_min,
+         " blocks. Got ", paste(format(n), collapse = ", "), ".",
+         call. = FALSE)
+  n <- as.integer(n)
   A <- BIB(m, p)
   s <- A$BIB
   gens <- list()

@@ -7,7 +7,8 @@
 Resolvable(n, mat)
 }
 \arguments{
-\item{n}{Index of the block (sub-variety) to be deleted.}
+\item{n}{Index of the block (sub-variety) to be deleted; an integer
+between 1 and \code{nrow(mat)}.}
 
 \item{mat}{The matrix of the BIBD (rows are blocks), e.g. the \code{BIB}
 component returned by \code{\link{BIB}}.}

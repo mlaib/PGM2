@@ -36,8 +36,12 @@
 #' \eqn{OA(p^m, (p^m-1)/(p-1), p, 2)}; for \eqn{p = 2, n = 1} the
 #' Plackett-Burman design of order \eqn{2^m}.
 #'
-#' Complexity grows quickly with \eqn{p^m}; intended for moderate sizes
-#' (\eqn{p^m \le 128}).
+#' Subspaces are enumerated by canonical reduced row echelon form, so the
+#' cost is proportional to the number of factors (the Gaussian binomial
+#' coefficient) times the \eqn{p^m} runs, rather than to the number of
+#' subsets of points. Every design with \eqn{p^m \le 128} is reachable;
+#' as a guide, \code{Qn(5, 2)} takes well under a second, \code{Qn(7, 1)}
+#' a few seconds and \code{Qn(7, 3)} (11811 factors) a few minutes.
 #' @author Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi
 #' @references
 #' A. Boudraa, Z. Gheribi-Aoulmi and M. Laib (2013). Recursive method for

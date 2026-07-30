@@ -102,3 +102,30 @@ test_that("non-prime and invalid orders are rejected", {
   expect_error(Steps(3, 1, p = 9), "prime")
   expect_error(BIB(1), "m")
 })
+
+test_that("block indices are validated with informative messages", {
+  bib <- BIB(3)$BIB                       # 15 blocks
+  expect_error(Gen(99, bib), "between 1 and 15")
+  expect_error(Resolvable(99, bib), "between 1 and 15")
+  expect_error(Resolvable(0, bib), "between 1 and 15")
+  expect_error(Resolvable(-1, bib), "between 1 and 15")
+  expect_error(Gen(2.5, bib), "between 1 and 15")
+  expect_error(Gen(c(1, 2), bib), "between 1 and 15")
+  expect_error(Gen(NA, bib), "between 1 and 15")
+  expect_error(Resolvable(1, bib[1, ]), "matrix of at least two blocks")
+  # valid indices other than 1 work
+  expect_equal(Resolvable(15, bib)$V, 8)
+  expect_equal(Gen(15, bib)$V, 7)
+})
+
+test_that("Steps rejects block indices larger than the last stage", {
+  # PG(4,2) chain has 31 -> 15 -> 7 blocks; the same index is used throughout
+  expect_error(Steps(4, 8), "between 1 and 7")
+  expect_error(Steps(4, 31), "between 1 and 7")
+  expect_error(Steps(3, 0), "between 1 and 7")
+  expect_error(Steps(3, 1, p = 3)[[1]], NA)          # 13 allowed for p = 3
+  expect_error(Steps(3, 13, p = 3), NA)
+  expect_error(Steps(3, 14, p = 3), "between 1 and 13")
+  # every admissible index yields the full chain
+  for (n in 1:7) expect_length(Steps(4, n)$UDs, 3)
+})

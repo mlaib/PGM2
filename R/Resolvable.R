@@ -6,7 +6,8 @@
 #' parts of the remaining blocks form a resolvable design (for a BIBD from
 #' PG(m, p) this is the design of the affine geometry AG(m, p)).
 #'
-#' @param n Index of the block (sub-variety) to be deleted.
+#' @param n Index of the block (sub-variety) to be deleted; an integer
+#'   between 1 and \code{nrow(mat)}.
 #' @param mat The matrix of the BIBD (rows are blocks), e.g. the \code{BIB}
 #'   component returned by \code{\link{BIB}}.
 #' @return A list with components:
@@ -41,6 +42,8 @@
 #' W$RBIB
 #' @export
 Resolvable <- function(n, mat) {
+  check_design_matrix(mat)
+  n <- check_block_index(n, nrow(mat))
   C <- mat[n, ]
   B <- mat[-n, , drop = FALSE]
   rows <- lapply(seq_len(nrow(B)), function(i) B[i, ][!(B[i, ] %in% C)])

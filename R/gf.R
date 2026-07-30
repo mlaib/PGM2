@@ -57,25 +57,58 @@ gaussian_binom <- function(m, k, p) {
 }
 
 subspaces <- function(m, p, d) {
-  # all d-dimensional linear subspaces of GF(p)^m, each as a matrix of its
-  # p^d vectors; enumeration by spanning d-subsets of nonzero vectors,
-  # de-duplicated on the point set
-  nz <- gf_vectors(m, p)
-  nz <- nz[rowSums(nz) > 0, , drop = FALSE]
-  keys <- function(M) apply(M, 1, paste, collapse = ",")
+  # All d-dimensional linear subspaces of GF(p)^m, each returned as the
+  # matrix of its p^d vectors. Enumeration is by canonical reduced row
+  # echelon basis: every subspace has exactly one RREF basis, determined by
+  # its d pivot columns together with the free entries to the right of each
+  # pivot in non-pivot columns. This generates each subspace exactly once,
+  # so the cost is proportional to the Gaussian binomial [m, d]_p rather
+  # than to the number of d-subsets of the p^m - 1 nonzero vectors.
+  if (d <= 0L) return(list(matrix(0L, nrow = 1L, ncol = m)))
+  co <- as.matrix(expand.grid(rep(list(0:(p - 1)), d)))
+  dimnames(co) <- NULL
   out <- vector("list", gaussian_binom(m, d, p))
-  seen <- character(); cnt <- 0L
-  cmb <- utils::combn(nrow(nz), d)
-  for (i in seq_len(ncol(cmb))) {
-    G <- nz[cmb[, i], , drop = FALSE]
-    co <- as.matrix(expand.grid(rep(list(0:(p - 1)), d)))
-    S <- unique((co %*% G) %% p)
-    if (nrow(S) != p^d) next
-    key <- paste(sort(keys(S)), collapse = "|")
-    if (!(key %in% seen)) {
-      seen <- c(seen, key); cnt <- cnt + 1L; out[[cnt]] <- S
-      if (cnt == length(out)) break
+  cnt <- 0L
+  for (piv in utils::combn(m, d, simplify = FALSE)) {
+    free <- lapply(seq_len(d), function(i) {
+      cc <- seq_len(m)
+      cc[cc > piv[i] & !(cc %in% piv)]
+    })
+    nfree <- sum(lengths(free))
+    fills <- if (nfree == 0L) matrix(0L, nrow = 1L, ncol = 0L) else {
+      f <- as.matrix(expand.grid(rep(list(0:(p - 1)), nfree)))
+      dimnames(f) <- NULL
+      f
+    }
+    for (r in seq_len(nrow(fills))) {
+      G <- matrix(0L, nrow = d, ncol = m)
+      for (i in seq_len(d)) G[i, piv[i]] <- 1L
+      if (nfree > 0L) {
+        k <- 0L
+        for (i in seq_len(d)) for (cc in free[[i]]) {
+          k <- k + 1L
+          G[i, cc] <- fills[r, k]
+        }
+      }
+      cnt <- cnt + 1L
+      out[[cnt]] <- (co %*% G) %% p
     }
   }
   out[seq_len(cnt)]
+}
+
+check_design_matrix <- function(mat) {
+  if (!is.matrix(mat) || nrow(mat) < 2L || ncol(mat) < 1L)
+    stop("'mat' must be a matrix of at least two blocks (rows), such as the ",
+         "'BIB' component returned by BIB().", call. = FALSE)
+  invisible(TRUE)
+}
+
+check_block_index <- function(n, nb) {
+  if (length(n) != 1L || is.na(n) || !is.numeric(n) || n != round(n) ||
+      n < 1 || n > nb)
+    stop("'n' must be a single block index between 1 and ", nb,
+         " (the number of blocks of 'mat'); got ",
+         paste(format(n), collapse = ", "), ".", call. = FALSE)
+  as.integer(n)
 }
