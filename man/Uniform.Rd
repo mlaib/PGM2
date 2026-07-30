@@ -2,44 +2,52 @@
 % Please edit documentation in R/Uniform.R
 \name{Uniform}
 \alias{Uniform}
-\title{Uniform designs}
+\title{Uniform Design from a Resolvable BIBD}
 \usage{
 Uniform(mat)
 }
 \arguments{
-\item{mat}{The matrix of the RBIBD.}
+\item{mat}{The matrix of the RBIBD (rows are blocks), e.g. the
+\code{RBIB} component returned by \code{\link{Resolvable}}.}
 }
 \value{
-A LIST of:
-\enumerate{
- \item[\code{n}] Number of experiments.
- \item[\code{F}] The dimension of the design.
- \item[\code{UD}] The configuration of the uniform design.
+A list with components:
+\describe{
+ \item{\code{n}}{Number of experiments (runs) of the uniform design.}
+ \item{\code{F}}{Number of factors (one per parallel class).}
+ \item{\code{UD}}{The design: an \code{n} x \code{F} matrix of levels.}
 }
 }
 \description{
-Builds the uniform design (UD) using a Resolvable Balanced Incomplete
-Block Design (RBIBD)
+Builds a symmetric uniform design (UD) from a resolvable balanced
+incomplete block design, following the correspondence of Fang et al.:
+the blocks are partitioned greedily into parallel classes, each class
+becomes a factor (column), and the level of a treatment on a factor is
+the index of the block containing it within that class.
+}
+\details{
+Works for any order p (the parallel-class extraction is purely
+combinatorial). For the RBIBD residual to a block of the BIBD of
+PG(m, p), the result is a uniform design with \eqn{p^m} runs and p
+levels per factor.
 }
 \examples{
-\dontrun{
+X <- BIB(3)                    # BIBD (15, 7, 3) from PG(3, 2)
+Y <- Resolvable(1, X$BIB)      # RBIBD (8, 14, 7, 4, 3)
+Uniform(Y$RBIB)$UD             # U(8, 2^7)
 
-m<-4
-X<-BIB(m)
-
-n<-1
-mat<-X$BIB
-Y<-Resolvable(n,mat)
-
-ud<-Uniform(Y$RBIB)  #Uniform design
-}
+Z <- BIB(2, p = 3)             # BIBD (13, 4, 1) from PG(2, 3)
+W <- Resolvable(1, Z$BIB)      # RBIBD (9, 12, 4, 3, 1)
+Uniform(W$RBIB)$UD             # U(9, 3^4)
 }
 \references{
-Fang.K.T et al., Constructions of uniform designs by
-using resolvable packings and coverings. Discrete Math. (19), 2003, 692-711.
+K.T. Fang, X. Lu, Y. Tang and J. Yin (2004). Constructions of uniform
+designs by using resolvable packings and coverings. \emph{Discrete
+Mathematics}, 274, 25--40.
 
-Fang.K.T et al., Construction of uniform designs via super-simple
-resolvable t-designs. Util. Math. (66).2004, 15-32.
+K.T. Fang, G.N. Ge, M.Q. Liu and H. Qin (2004). Construction of uniform
+designs via super-simple resolvable t-designs. \emph{Utilitas
+Mathematica}, 66, 15--32.
 }
 \author{
 Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi

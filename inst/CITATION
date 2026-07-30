@@ -1,0 +1,26 @@
+citHeader("To cite PGM2 in publications, please use both the paper and the package:")
+
+bibentry(
+  bibtype = "Article",
+  title   = "Recursive method for construction of resolvable nested designs and uniform designs associated",
+  author  = c(person("Abla", "Boudraa"),
+              person("Zebida", "Gheribi-Aoulmi"),
+              person("Mohamed", "Laib")),
+  journal = "International Journal of Research and Reviews in Applied Sciences",
+  year    = "2013",
+  volume  = "17",
+  number  = "2",
+  pages   = "167--176",
+  url     = "https://web.archive.org/web/20131228061100/http://www.arpapress.com/Volumes/Vol17Issue2/IJRRAS_17_2_04.pdf"
+)
+
+bibentry(
+  bibtype = "Manual",
+  title   = "PGM2: Recursive Construction of Nested Resolvable Designs and Associated Uniform Designs over GF(p)",
+  author  = c(person("Mohamed", "Laib"),
+              person("Abla", "Boudraa"),
+              person("Zebida", "Gheribi-Aoulmi")),
+  year    = "2026",
+  note    = "R package version 2.0.0",
+  url     = "https://CRAN.R-project.org/package=PGM2"
+)
