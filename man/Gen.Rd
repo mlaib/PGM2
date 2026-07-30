@@ -2,41 +2,55 @@
 % Please edit documentation in R/Gen.R
 \name{Gen}
 \alias{Gen}
-\title{Balanced Incomplete binary Blocks Designs of second Generation.}
+\title{BIBD of the Next Generation}
 \usage{
 Gen(n, mat)
 }
 \arguments{
-\item{n}{The sub-variety of the block to be deleted.}
+\item{n}{Index of the block (sub-variety) to be deleted; an integer
+between 1 and \code{nrow(mat)}.}
 
-\item{mat}{The matrix of the BIB.}
+\item{mat}{The matrix of the BIBD (rows are blocks), e.g. the \code{BIB}
+component returned by \code{\link{BIB}}.}
 }
 \value{
-A LIST of:
-\enumerate{
- \item[\code{V}] Number of treatments in the BIBD.
- \item[\code{B}] Number of blocks of the BIBD.
- \item[\code{R}] Repetition of each treatment.
- \item[\code{K}] Size of each block.
- \item[\code{BIB}] The configuration of the BIBD.
+A list with components:
+\describe{
+ \item{\code{V}}{Number of treatments of the new BIBD.}
+ \item{\code{B}}{Number of blocks.}
+ \item{\code{R}}{Replication of each treatment.}
+ \item{\code{K}}{Size of each block.}
+ \item{\code{BIB2}}{The design: a matrix whose rows are the blocks.}
 }
 }
 \description{
-Gives the configuration of a Balanced Incomplete binary Blocks
-Designs of seconde generation.
+Extracts the balanced incomplete block design of the next generation by
+deleting block \code{n} of a BIBD built from a projective geometry: each
+remaining block is intersected with the deleted one, so the deleted block
+plays the role of a lower-dimensional projective geometry and the
+intersections are its hyperplanes.
+}
+\details{
+Works for any order p: block sizes are derived from the data
+instead of the binary-only formula used in PGM2 <= 1.2 (for a symmetric
+BIBD every remaining block meets the deleted block in exactly
+\code{Lambda} treatments). For a BIBD from PG(m, p), the result is the
+BIBD of PG(m - 1, p) on the treatments of the deleted block.
 }
 \examples{
-\dontrun{
-m<-4
-X<-BIB(m)   #BIB from PG(4,2)
+X <- BIB(4)              # BIBD (31, 15, 7) from PG(4, 2)
+X2 <- Gen(1, X$BIB)      # second generation: BIBD (15, 7, 3)
+X2$V; X2$K
 
-n<-1
-mat<-X$BIB
-X2<-Gen(n,mat) #Extracts the BIB second generation
-}
+Y <- BIB(3, p = 3)       # BIBD (40, 13, 4) from PG(3, 3)
+Y2 <- Gen(1, Y$BIB)      # second generation: BIBD (13, 4, 1)
+Y2$V; Y2$K
 }
 \references{
-D. Dugué Traité de statistique théorique et appliquée, Masson et Cie, 1958.
+A. Boudraa, Z. Gheribi-Aoulmi and M. Laib (2013). Recursive method for
+construction of resolvable nested designs and uniform designs associated.
+\emph{International Journal of Research and Reviews in Applied Sciences},
+17(2), 167--176.
 }
 \author{
 Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi

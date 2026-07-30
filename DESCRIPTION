@@ -1,15 +1,30 @@
 Package: PGM2
 Type: Package
-Title: Recursive Construction of Nested Resolvable Designs and Associated Uniform Designs
-Version: 1.2
-Date: 2025-05-27
+Title: Recursive Construction of Nested Resolvable Designs and Associated Uniform Designs over GF(p)
+Version: 2.0.0
+Date: 2026-07-30
 Authors@R: c(
   person(given = "Mohamed", family = "Laib", role = c("aut", "cre"), email = "laib.med@gmail.com"),
   person(given = "Abla", family = "Boudraa", role = "aut"),
   person(given = "Zebida", family = "Gheribi-Aoulmi", role = "aut"))
-Description: This package implements recursive construction methods for balanced incomplete block designs (BIBDs), their second generation, resolvable BIBDs (RBIBDs), and uniform designs (UDs) derived from projective geometries over GF(2). It enables extraction of nested structures in multiple stages and supports recursive resolution processes, as introduced in Boudraa et al. (2013).
+Description: Recursive construction of balanced incomplete block designs
+    (BIBDs), their successive generations, resolvable BIBDs (RBIBDs) and
+    associated uniform designs (UDs), derived from finite projective
+    geometries PG(m, p) over a Galois field GF(p) of any prime order p.
+    Implements and generalises the method of Boudraa, Gheribi-Aoulmi and
+    Laib (2013, International Journal of Research and Reviews in Applied
+    Sciences, 17(2), 167-176), which was previously available only for
+    p = 2, and the uniform design constructions of Fang et al. (2004)
+    <doi:10.1016/S0012-365X(03)00100-6>. Designs of every recursion stage
+    can be extracted, and all constructions are validated against the
+    parameters published in the original paper.
 License: GPL-3
 Encoding: UTF-8
-URL: https://mlaib.net
+URL: https://mlaib.net, https://github.com/mlaib/PGM2
+BugReports: https://github.com/mlaib/PGM2/issues
+Imports: stats
+Suggests: knitr, rmarkdown, testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
 NeedsCompilation: no
-RoxygenNote: 7.3.2
+Config/roxygen2/version: 8.0.0

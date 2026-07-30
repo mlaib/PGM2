@@ -2,35 +2,56 @@
 % Please edit documentation in R/BIB.R
 \name{BIB}
 \alias{BIB}
-\title{Balanced Incomplete binary Blocks Designs}
+\title{Balanced Incomplete Block Design from PG(m, p)}
 \usage{
-BIB(m)
+BIB(m, p = 2)
 }
 \arguments{
-\item{m}{Dimension of the projective geometry defined on GF(2)}
+\item{m}{Dimension of the projective geometry (an integer, \code{m >= 2}).}
+
+\item{p}{Order of the Galois field GF(p); must be prime. Defaults to
+\code{p = 2}, which reproduces the designs of PGM2 <= 1.2 exactly.}
 }
 \value{
-A LIST of:
-\enumerate{
- \item[\code{V}] Number of treatments in the BIBD.
- \item[\code{B}] Number of blocks of the BIBD.
- \item[\code{R}] Repetition of each treatment.
- \item[\code{K}] Size of each block.
- \item[\code{BIB}] The configuration of the BIBD.
+A list with components:
+\describe{
+ \item{\code{V}}{Number of treatments, \eqn{(p^{m+1}-1)/(p-1)}.}
+ \item{\code{B}}{Number of blocks (equal to \code{V}: the design is
+   symmetric).}
+ \item{\code{R}}{Replication of each treatment, \eqn{(p^m-1)/(p-1)}.}
+ \item{\code{K}}{Block size (equal to \code{R}).}
+ \item{\code{Lambda}}{Concurrence parameter, \eqn{(p^{m-1}-1)/(p-1)}.}
+ \item{\code{BIB}}{The design: a \code{B} x \code{K} matrix whose rows
+   are the blocks, containing treatment labels.}
 }
 }
 \description{
-Gives the configuration of a Balanced Incomplete binary Blocks
-Designs (BIBD) using a projective geometry on a Galois Field of order 2 GF(2).
+Builds the symmetric balanced incomplete block design (BIBD) whose
+treatments are the points of the projective geometry PG(m, p) over the
+Galois field GF(p) and whose blocks are its hyperplanes.
+}
+\details{
+Treatments are numbered by enumerating the canonical
+representatives of the projective points in base-p counting order. Block
+\code{i} consists of the points \code{x} lying on the hyperplane
+\code{a_i . x = 0 (mod p)}, where \code{a_i} is the \code{i}-th point
+(point-hyperplane duality).
 }
 \examples{
+X <- BIB(4)        # BIBD (31, 15, 7) from PG(4, 2)
+X$V; X$K; X$Lambda
 
-m<-4
-X<-BIB(m)   #BIB from PG(4,2)
-
+Y <- BIB(2, p = 3) # BIBD (13, 4, 1): the projective plane of order 3
+Y$BIB
 }
 \references{
-D. Dugué Traité de statistique théorique et appliquée, Masson et Cie, 1958.
+A. Boudraa, Z. Gheribi-Aoulmi and M. Laib (2013). Recursive method for
+construction of resolvable nested designs and uniform designs associated.
+\emph{International Journal of Research and Reviews in Applied Sciences},
+17(2), 167--176.
+
+D. Dugue (1958). \emph{Traite de statistique theorique et appliquee}.
+Masson et Cie, Paris.
 }
 \author{
 Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi
