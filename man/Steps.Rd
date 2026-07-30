@@ -24,10 +24,10 @@ Steps(m, n, stage = "all", p = 2)
 }
 \value{
 A named list with (depending on \code{stage}) components
-\code{BIB1} (the first-generation BIBD as returned by
-\code{\link{BIB}}), \code{BIBg} (a list of the next-generation BIBDs),
-\code{Resolvables} (a list of the resolvable designs of every stage)
-and \code{UDs} (a list of the associated uniform designs).
+  \code{BIB1} (the first-generation BIBD as returned by
+  \code{\link{BIB}}), \code{BIBg} (a list of the next-generation BIBDs),
+  \code{Resolvables} (a list of the resolvable designs of every stage)
+  and \code{UDs} (a list of the associated uniform designs).
 }
 \description{
 Runs the whole recursion of Boudraa et al. (2013) starting from the
@@ -38,8 +38,8 @@ is extracted (via \code{\link{Gen}}) until the geometry is exhausted.
 }
 \note{
 The return structure is tidier than in PGM2 <= 1.2, where the
-stages were spliced into one flat, partially unnamed list: each stage
-is now a proper sub-list.
+  stages were spliced into one flat, partially unnamed list: each stage
+  is now a proper sub-list.
 }
 \examples{
 s <- Steps(3, 1)               # all stages of PG(3, 2)

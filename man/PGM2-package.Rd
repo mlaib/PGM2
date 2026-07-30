@@ -55,14 +55,17 @@ Useful links:
   \item \url{https://github.com/mlaib/PGM2}
   \item Report bugs at \url{https://github.com/mlaib/PGM2/issues}
 }
+
 }
 \author{
 \strong{Maintainer}: Mohamed Laib \email{laib.med@gmail.com}
 
 Authors:
 \itemize{
+  \item Mohamed Laib \email{laib.med@gmail.com}
   \item Abla Boudraa
   \item Zebida Gheribi-Aoulmi
 }
+
 }
 \keyword{internal}
