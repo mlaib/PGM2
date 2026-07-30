@@ -1,0 +1,38 @@
+{
+  "title": "PGM2: Recursive Construction of Nested Resolvable Designs and Associated Uniform Designs over GF(p)",
+  "description": "<p>An R package for the recursive construction of balanced incomplete block designs (BIBDs), their successive generations, resolvable BIBDs and the associated uniform designs, derived from finite projective geometries PG(m, p) over a Galois field GF(p) of any prime order p.</p><p>Version 2.0.0 generalises the construction from GF(2) to any prime order, adds the direct constructor <code>Qn()</code> for the reduced stage designs and their uniform designs, and validates all outputs against the parameter tables of Boudraa, Gheribi-Aoulmi and Laib (2013).</p>",
+  "license": "GPL-3.0-or-later",
+  "upload_type": "software",
+  "access_right": "open",
+  "creators": [
+    {
+      "name": "Laib, Mohamed",
+      "affiliation": "Luxembourg Institute of Science and Technology"
+    },
+    {
+      "name": "Boudraa, Abla",
+      "affiliation": "University Constantine 1"
+    },
+    {
+      "name": "Gheribi-Aoulmi, Zebida",
+      "affiliation": "University of Constantine"
+    }
+  ],
+  "keywords": [
+    "experimental design",
+    "balanced incomplete block design",
+    "resolvable design",
+    "uniform design",
+    "projective geometry",
+    "Galois field",
+    "discrete discrepancy",
+    "R package"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://cran.r-project.org/package=PGM2",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}
