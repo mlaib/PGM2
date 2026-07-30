@@ -156,6 +156,25 @@ $(4,6,3,2,1)$, $(8,14,7,4,3)$, $(16,30,15,8,7)$; for $p=3$ the designs
 $BIB(13,4,1)$, $BIB(40,13,4)$, $BIB(121,40,13)$ with resolvable designs
 $(9,12,4,3,1)$, $(27,39,13,9,4)$, $(81,120,40,27,13)$.
 
+## The reduced designs $Q^*_n$ directly: `Qn`
+
+The manual juxtaposition of Example 3 is automated by `Qn(m, n, p)`,
+which builds the reduced resolvable design $Q^*_n$ and its uniform
+design $U(p^m, (p^n)^{r})$ for any stage. Its parameters match the
+paper's tables, e.g. $Q^*_2(16, 140, 35, 4, 7)$ for $PG(4,2)$:
+
+```{r}
+Q <- Qn(4, 2)
+c(V = Q$V, B = Q$B, R = Q$R, K = Q$K, Lambda = Q$Lambda)
+
+identical(dim(Qn(3, 2)$UD), dim(ud$UD))  # the design of Example 3
+```
+
+Any two distinct runs of a `Qn` design coincide in exactly `Lambda`
+factors (the designs are *equidistant*), so every stage attains the
+discrete-discrepancy lower bound of Fang et al. (2003), and levels
+refine coherently across stages.
+
 ## Beyond the paper: any prime order
 
 Nothing restricts the recursion to the orders tabulated in the paper — any
