@@ -5,7 +5,9 @@ qn_cases <- list(
   list(m = 3, n = 2, p = 2, pars = c(8, 28, 7, 2, 1)),
   list(m = 4, n = 2, p = 2, pars = c(16, 140, 35, 4, 7)),
   list(m = 4, n = 3, p = 2, pars = c(16, 120, 15, 2, 1)),
-  list(m = 3, n = 2, p = 3, pars = c(27, 117, 13, 3, 1))
+  list(m = 3, n = 2, p = 3, pars = c(27, 117, 13, 3, 1)),
+  list(m = 4, n = 2, p = 3, pars = c(81, 1170, 130, 9, 13)),
+  list(m = 4, n = 3, p = 3, pars = c(81, 1080, 40, 3, 1))
 )
 
 test_that("Qn reproduces the Q*_n parameters of the paper's tables", {

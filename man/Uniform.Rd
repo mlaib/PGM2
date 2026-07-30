@@ -16,16 +16,28 @@ A list with components:
  \item{\code{n}}{Number of experiments (runs) of the uniform design.}
  \item{\code{F}}{Number of factors (one per parallel class).}
  \item{\code{UD}}{The design: an \code{n} x \code{F} matrix of levels.}
+ \item{\code{classes}}{A list giving, for each factor, the row indices
+   of \code{mat} forming that parallel class.}
 }
 }
 \description{
 Builds a symmetric uniform design (UD) from a resolvable balanced
 incomplete block design, following the correspondence of Fang et al.:
-the blocks are partitioned greedily into parallel classes, each class
-becomes a factor (column), and the level of a treatment on a factor is
-the index of the block containing it within that class.
+the blocks are partitioned into parallel classes, each class becomes a
+factor (column), and the level of a treatment on a factor is the index
+of the block of that class containing it.
 }
 \details{
+The resolution is found by exact-cover search with
+backtracking, so the result does not depend on the order of the rows of
+\code{mat}: any row permutation yields the same design up to a
+permutation of the factors and a relabelling of levels. Earlier
+versions used a first-fit greedy extraction, which could fail on a
+valid resolvable design presented in an unfavourable row order.
+
+If \code{mat} admits no resolution, or the search budget is exhausted,
+an informative error is raised rather than a partial design returned.
+
 Works for any order p (the parallel-class extraction is purely
 combinatorial). For the RBIBD residual to a block of the BIBD of
 PG(m, p), the result is a uniform design with \eqn{p^m} runs and p
@@ -39,6 +51,11 @@ Uniform(Y$RBIB)$UD             # U(8, 2^7)
 Z <- BIB(2, p = 3)             # BIBD (13, 4, 1) from PG(2, 3)
 W <- Resolvable(1, Z$BIB)      # RBIBD (9, 12, 4, 3, 1)
 Uniform(W$RBIB)$UD             # U(9, 3^4)
+
+# the result does not depend on the order of the blocks
+set.seed(1)
+P <- Y$RBIB[sample(nrow(Y$RBIB)), ]
+dim(Uniform(P)$UD)
 }
 \references{
 K.T. Fang, X. Lu, Y. Tang and J. Yin (2004). Constructions of uniform

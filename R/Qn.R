@@ -32,16 +32,24 @@
 #' \eqn{W' \subset W} then the level partition induced by W is a
 #' coarsening of the one induced by W'.
 #'
-#' For \eqn{n = 1} the design is the Rao-Hamming orthogonal array
-#' \eqn{OA(p^m, (p^m-1)/(p-1), p, 2)}; for \eqn{p = 2, n = 1} the
-#' Plackett-Burman design of order \eqn{2^m}.
+#' For \eqn{n = 1} the design is the saturated Rao-Hamming orthogonal
+#' array \eqn{OA(p^m, (p^m-1)/(p-1), p, 2)}. For \eqn{p = 2, n = 1},
+#' recoding its two levels to \eqn{\pm 1} gives the Sylvester-Hadamard
+#' member of the Plackett-Burman class of order \eqn{2^m}, up to row,
+#' column and level equivalence.
 #'
-#' Subspaces are enumerated by canonical reduced row echelon form, so the
-#' cost is proportional to the number of factors (the Gaussian binomial
-#' coefficient) times the \eqn{p^m} runs, rather than to the number of
-#' subsets of points. Every design with \eqn{p^m \le 128} is reachable;
-#' as a guide, \code{Qn(5, 2)} takes well under a second, \code{Qn(7, 1)}
-#' a few seconds and \code{Qn(7, 3)} (11811 factors) a few minutes.
+#' Subspaces are enumerated by canonical reduced row echelon form, which
+#' generates each subspace exactly once rather than scanning subsets of
+#' the \eqn{p^m - 1} nonzero vectors. Labelling then visits, for every
+#' subspace and every run, the \eqn{p^{m-n}} elements of a coset, so the
+#' cost is approximately
+#' \eqn{O\!\left(\binom{m}{m-n}_p \, p^m \, p^{m-n}\right)} plus
+#' factor-construction overhead, with output size
+#' \eqn{O\!\left(\binom{m}{m-n}_p \, p^m\right)}. This is why stages
+#' with similar factor counts can differ in runtime. On the machine used
+#' for the package benchmarks, \code{Qn(5, 2)} completed in well under a
+#' second, \code{Qn(7, 1)} in a few seconds and \code{Qn(7, 3)} (11811
+#' factors) in a few minutes; timings are hardware dependent.
 #' @author Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi
 #' @references
 #' A. Boudraa, Z. Gheribi-Aoulmi and M. Laib (2013). Recursive method for

@@ -129,3 +129,65 @@ test_that("Steps rejects block indices larger than the last stage", {
   # every admissible index yields the full chain
   for (n in 1:7) expect_length(Steps(4, n)$UDs, 3)
 })
+
+test_that("Uniform() does not depend on the order of the blocks", {
+  Y <- Resolvable(1, BIB(3)$BIB)
+  base <- Uniform(Y$RBIB)
+  coinc <- function(D) {
+    o <- c()
+    for (i in seq_len(nrow(D) - 1)) for (k in (i + 1):nrow(D))
+      o <- c(o, sum(D[i, ] == D[k, ]))
+    sort(o)
+  }
+  for (s in 1:20) {
+    set.seed(s)
+    P <- Y$RBIB[sample(nrow(Y$RBIB)), ]
+    U <- Uniform(P)
+    expect_equal(U$n, base$n)
+    expect_equal(U$F, base$F)
+    expect_equal(coinc(U$UD), coinc(base$UD))
+  }
+})
+
+test_that("Uniform() resolves designs a first-fit greedy cannot", {
+  # the 28-block design of the 2013 paper's Example 3, row-permuted
+  bib <- BIB(3)$BIB
+  mat <- NULL
+  for (i in 1:15) mat[[i]] <- Gen(i, bib)$BIB2
+  x <- Reduce("rbind", mat)
+  v <- bib[1, ]
+  for (i in seq_len(nrow(x))) for (j in seq_len(ncol(x)))
+    if (any(x[i, j] == v)) x[i, j] <- 0
+  for (i in nrow(x):1) if (all(x[i, ] == 0)) x <- x[-i, ]
+  s0 <- x[1, ]; s0 <- s0[s0 > 0]
+  x1 <- matrix(nrow = nrow(x), ncol = length(s0))
+  for (i in seq_len(nrow(x))) x1[i, ] <- x[i, ][x[i, ] > 0]
+  A <- unique(x1)
+  expect_equal(dim(A), c(28L, 2L))
+  for (s in 1:20) {
+    set.seed(s)
+    U <- Uniform(A[sample(nrow(A)), ])
+    expect_equal(U$F, 7)
+    expect_equal(U$n, 8)
+  }
+  # a classical resolvable design from outside the package: 1-factorisation of K6
+  U6 <- Uniform(t(utils::combn(6, 2)))
+  expect_equal(U6$n, 6)
+  expect_equal(U6$F, 5)
+  expect_true(all(vapply(seq_len(U6$F),
+    function(j) length(unique(table(U6$UD[, j]))) == 1L, logical(1))))
+})
+
+test_that("Uniform() rejects designs that cannot be resolvable", {
+  expect_error(Uniform(t(utils::combn(5, 2))), "cannot be resolvable")
+  # 4 treatments, block size 2 (so divisibility passes), but block 1 repeats
+  expect_error(Uniform(matrix(c(1, 1, 2, 3, 4, 2), nrow = 3, byrow = TRUE)),
+               "repeated treatment")
+})
+
+test_that("Steps validates the stage argument", {
+  expect_error(Steps(3, 1, stage = "not-a-stage"), "stage")
+  expect_error(Steps(3, 1, stage = character(0)), "stage")
+  expect_error(Steps(3, 1, stage = c("S1", "S9")), "stage")
+  expect_named(Steps(3, 1, stage = c("S1", "S1")), "BIB1")
+})

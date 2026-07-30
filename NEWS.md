@@ -1,3 +1,33 @@
+# PGM2 2.0.1
+
+## Bug fixes
+
+* `Uniform()` no longer depends on the order of the blocks. The previous
+  first-fit greedy extraction of parallel classes could fail on a valid
+  resolvable design presented in an unfavourable row order: of 200 random
+  row permutations of the 28-block design of Example 3 of Boudraa et al.
+  (2013), 178 raised an error. The resolution is now found by exact-cover
+  search with backtracking over the whole partition, so any row
+  permutation yields the same design up to a permutation of the factors
+  and a relabelling of levels. Designs produced by the package's own
+  constructors are unchanged.
+* `Uniform()` validates its input and reports clearly when a matrix
+  cannot be resolvable (block size not dividing the number of
+  treatments, a repeated treatment within a block, or no resolution),
+  instead of returning a partial design or failing with an internal
+  subscript error. It also gains a `classes` component listing the row
+  indices forming each parallel class.
+* `Steps()` rejects unknown or empty `stage` values instead of silently
+  returning an empty list.
+
+## Documentation
+
+* The complexity note for `Qn()` now reflects the labelling step as well
+  as the subspace enumeration, and states that timings are hardware
+  dependent.
+* The `Qn()` help page states the Plackett-Burman identification
+  precisely, up to row, column and level equivalence.
+
 # PGM2 2.0.0
 
 Major generalisation: the whole construction now works over GF(p) for

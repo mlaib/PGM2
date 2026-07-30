@@ -77,7 +77,19 @@ Steps <- function(m, n, stage = "all", p = 2) {
     m <- m - 1
   }
 
-  if (length(stage) == 1 && stage == "all") stage <- c("S1", "S2", "S3", "S4")
+  if (!is.character(stage) || length(stage) == 0L || anyNA(stage))
+    stop("'stage' must be a non-empty character vector, either \"all\" or ",
+         "a subset of \"S1\", \"S2\", \"S3\", \"S4\".", call. = FALSE)
+  if (length(stage) == 1L && stage == "all") {
+    stage <- c("S1", "S2", "S3", "S4")
+  } else {
+    bad <- setdiff(stage, c("S1", "S2", "S3", "S4"))
+    if (length(bad))
+      stop("unknown 'stage' value(s): ", paste(dQuote(bad), collapse = ", "),
+           ". Valid values are \"all\", \"S1\", \"S2\", \"S3\", \"S4\".",
+           call. = FALSE)
+    stage <- unique(stage)
+  }
   lst <- list()
   if ("S1" %in% stage) lst$BIB1 <- A
   if ("S2" %in% stage) lst$BIBg <- gens
