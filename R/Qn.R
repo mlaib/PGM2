@@ -49,10 +49,10 @@
 #' designs by using resolvable packings and coverings. \emph{Discrete
 #' Mathematics}, 274, 25--40.
 #' @examples
-#' Q <- Qn(3, 2)            # stage 1 of PG(3,2): U(8, 2^7), Plackett-Burman
+#' Q <- Qn(3, 1)            # stage 1 of PG(3,2): U(8, 2^7), Plackett-Burman
 #' Q$UD
 #'
-#' Q2 <- Qn(3, 2, p = 2)    # same as above
+#' Q2 <- Qn(3, 2)           # stage 2: U(8, (2^2)^7), Example 3 of the paper
 #' Q32 <- Qn(3, 1, p = 3)   # U(27, 3^13)
 #' c(Q32$V, Q32$B, Q32$R, Q32$K, Q32$Lambda)
 #'

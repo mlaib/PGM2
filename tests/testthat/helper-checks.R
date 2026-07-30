@@ -55,3 +55,19 @@ bib_v12 <- function(m) {
   for (i in 1:t) bie[i, ] <- fill(i, prg)
   bie
 }
+
+# Discrete discrepancy (kernel a=1, b=1/2) and its lower bound
+# (Fang, Lu, Tang & Yin 2004), used to verify bound attainment.
+dd2 <- function(D, q, a = 1, b = 0.5) {
+  n <- nrow(D); s <- ncol(D); tot <- 0
+  for (i in seq_len(n)) for (k in seq_len(n)) {
+    d <- sum(D[i, ] == D[k, ])
+    tot <- tot + a^d * b^(s - d)
+  }
+  -((a + (q - 1) * b) / q)^s + tot / n^2
+}
+dd2_lb <- function(n, s, q, a = 1, b = 0.5) {
+  lam <- s * (n / q - 1) / (n - 1)
+  stopifnot(abs(lam - round(lam)) < 1e-9)   # integer in all our cases
+  -((a + (q - 1) * b) / q)^s + a^s / n + (n - 1) / n * a^lam * b^(s - lam)
+}
