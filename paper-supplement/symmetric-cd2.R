@@ -101,6 +101,7 @@ rand_utype <- function(n, s, q) {
 }
 
 configs <- list(c(3, 1, 2), c(3, 2, 2), c(4, 1, 2), c(4, 2, 2), c(4, 3, 2),
+                c(5, 1, 2), c(5, 2, 2), c(5, 3, 2), c(5, 4, 2),
                 c(2, 1, 3), c(3, 1, 3), c(3, 2, 3), c(2, 1, 5))
 NCOMP <- 20
 # Run from the directory containing this script; outputs are relative.
