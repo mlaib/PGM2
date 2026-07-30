@@ -41,3 +41,41 @@ proj_points <- function(m, p) {
   keep <- apply(grid, 1, function(x) any(x != 0) && x[which(x != 0)[1]] == 1)
   grid[keep, , drop = FALSE]
 }
+
+gf_vectors <- function(m, p) {
+  g <- as.matrix(expand.grid(rep(list(0:(p - 1)), m)))
+  dimnames(g) <- NULL
+  g
+}
+
+gaussian_binom <- function(m, k, p) {
+  if (k < 0 || k > m) return(0)
+  if (k == 0) return(1)
+  num <- prod(vapply(seq_len(k), function(i) p^(m - i + 1) - 1, numeric(1)))
+  den <- prod(vapply(seq_len(k), function(i) p^i - 1, numeric(1)))
+  round(num / den)
+}
+
+subspaces <- function(m, p, d) {
+  # all d-dimensional linear subspaces of GF(p)^m, each as a matrix of its
+  # p^d vectors; enumeration by spanning d-subsets of nonzero vectors,
+  # de-duplicated on the point set
+  nz <- gf_vectors(m, p)
+  nz <- nz[rowSums(nz) > 0, , drop = FALSE]
+  keys <- function(M) apply(M, 1, paste, collapse = ",")
+  out <- vector("list", gaussian_binom(m, d, p))
+  seen <- character(); cnt <- 0L
+  cmb <- utils::combn(nrow(nz), d)
+  for (i in seq_len(ncol(cmb))) {
+    G <- nz[cmb[, i], , drop = FALSE]
+    co <- as.matrix(expand.grid(rep(list(0:(p - 1)), d)))
+    S <- unique((co %*% G) %% p)
+    if (nrow(S) != p^d) next
+    key <- paste(sort(keys(S)), collapse = "|")
+    if (!(key %in% seen)) {
+      seen <- c(seen, key); cnt <- cnt + 1L; out[[cnt]] <- S
+      if (cnt == length(out)) break
+    }
+  }
+  out[seq_len(cnt)]
+}

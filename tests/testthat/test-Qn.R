@@ -1,0 +1,72 @@
+# Q*_n parameters from the 2013 paper's Tables 1 (p = 2) and 2 (p = 3),
+# plus equidistance, level balance and the refinement property.
+
+qn_cases <- list(
+  list(m = 3, n = 2, p = 2, pars = c(8, 28, 7, 2, 1)),
+  list(m = 4, n = 2, p = 2, pars = c(16, 140, 35, 4, 7)),
+  list(m = 4, n = 3, p = 2, pars = c(16, 120, 15, 2, 1)),
+  list(m = 3, n = 2, p = 3, pars = c(27, 117, 13, 3, 1))
+)
+
+test_that("Qn reproduces the Q*_n parameters of the paper's tables", {
+  for (cs in qn_cases) {
+    Q <- Qn(cs$m, cs$n, cs$p)
+    expect_equal(c(Q$V, Q$B, Q$R, Q$K, Q$Lambda), cs$pars,
+                 label = sprintf("PG(%d,%d) n=%d", cs$m, cs$p, cs$n))
+    expect_equal(Q$B, Q$R * Q$Levels)
+    expect_equal(dim(Q$UD), c(Q$V, Q$R))
+  }
+})
+
+test_that("Qn uniform designs are level-balanced and equidistant", {
+  for (cs in qn_cases[c(1, 4)]) {
+    Q <- Qn(cs$m, cs$n, cs$p)
+    for (j in seq_len(Q$R)) {
+      tab <- table(Q$UD[, j])
+      expect_length(tab, Q$Levels)
+      expect_length(unique(as.vector(tab)), 1)
+    }
+    co <- c()
+    for (i in seq_len(Q$V - 1)) for (k in (i + 1):Q$V)
+      co <- c(co, sum(Q$UD[i, ] == Q$UD[k, ]))
+    expect_equal(unique(co), Q$Lambda)
+  }
+})
+
+test_that("Qn stage 1 is the stage-1 design of Resolvable + Uniform", {
+  for (cfg in list(c(3, 2), c(2, 3))) {
+    m <- cfg[1]; p <- cfg[2]
+    Q <- Qn(m, 1, p)
+    U <- Uniform(Resolvable(1, BIB(m, p)$BIB)$RBIB)
+    expect_equal(Q$V, U$n)
+    expect_equal(Q$R, U$F)
+    # same coincidence profile (designs equal up to column/level relabel)
+    coinc <- function(D) {
+      out <- c()
+      for (i in seq_len(nrow(D) - 1)) for (k in (i + 1):nrow(D))
+        out <- c(out, sum(D[i, ] == D[k, ]))
+      sort(out)
+    }
+    expect_equal(coinc(Q$UD), coinc(U$UD))
+  }
+})
+
+test_that("levels refine across stages (PG(3,2): stage 1 vs stage 2)", {
+  Q1 <- Qn(3, 1); Q2 <- Qn(3, 2)
+  # every stage-1 factor (2 levels) must be a coarsening of at least one
+  # stage-2 factor (4 levels): each stage-2 level maps into one stage-1 level
+  refines <- function(fine, coarse)
+    all(rowSums(table(fine, coarse) > 0) == 1)
+  for (j1 in seq_len(Q1$R)) {
+    hit <- any(vapply(seq_len(Q2$R), function(j2)
+      refines(Q2$UD[, j2], Q1$UD[, j1]), logical(1)))
+    expect_true(hit, label = sprintf("stage-1 factor %d refined", j1))
+  }
+})
+
+test_that("Qn validates its arguments", {
+  expect_error(Qn(3, 3), "n")
+  expect_error(Qn(3, 0), "n")
+  expect_error(Qn(1, 1), "m")
+  expect_error(Qn(3, 1, p = 4), "prime")
+})

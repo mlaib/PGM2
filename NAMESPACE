@@ -2,6 +2,7 @@
 
 export(BIB)
 export(Gen)
+export(Qn)
 export(Resolvable)
 export(Steps)
 export(Uniform)

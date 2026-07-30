@@ -6,6 +6,13 @@ Versions <= 1.2 implemented only p = 2.
 
 ## New features
 
+* New function `Qn(m, n, p = 2)`: builds the reduced resolvable design
+  Q*_n of stage n directly, with its associated uniform design
+  U(p^m, (p^n)^r) — the design of the 2013 paper's Example 3, previously
+  constructible only by hand. Any two runs coincide in a constant number
+  of factors (equidistance), so every stage attains the
+  discrete-discrepancy lower bound of Fang et al. (2004), and levels
+  refine across stages.
 * `BIB(m, p = 2)` and `Steps(m, n, stage, p = 2)` gain a `p` argument
   (prime; checked). `Gen()` and `Resolvable()` are now order-agnostic:
   block sizes are derived from the data instead of binary-only formulas.
