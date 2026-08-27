@@ -1,0 +1,5 @@
+"k","coincidence_values","mean","two_valued","equidistant","OA_strength2","efnod","dd2","dd2_bound","attains_bound"
+2,"0/1",0.4,TRUE,FALSE,TRUE,0,0,0,TRUE
+3,"0/1",0.6,TRUE,FALSE,TRUE,0,0.005859375,0.005859375,TRUE
+4,"0/1",0.8,TRUE,FALSE,TRUE,0,0.015380859375,0.015380859375,TRUE
+5,"1",1,TRUE,TRUE,TRUE,0,0.025726318359375,0.025726318359375,TRUE

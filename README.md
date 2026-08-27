@@ -62,3 +62,11 @@ and uniform-design rows of both of its parameter tables, and selected
 reduced-design rows.
 
 License: GPL-3
+
+## Paper supplement
+
+The `paper-supplement/` directory (not part of the CRAN package) holds the
+scripts, result files and archived designs behind the accompanying paper on
+the projection spectrum and factor selection of these designs; see
+`paper-supplement/README.md`. Releases are archived on Zenodo under the
+concept DOI above.

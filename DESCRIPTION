@@ -2,7 +2,7 @@ Package: PGM2
 Type: Package
 Title: Recursive Construction of Nested Resolvable Designs and Associated Uniform Designs over GF(p)
 Version: 2.0.1
-Date: 2026-07-30
+Date: 2026-08-27
 Authors@R: c(
   person(given = "Mohamed", family = "Laib", role = c("aut", "cre"), email = "laib.med@gmail.com"),
   person(given = "Abla", family = "Boudraa", role = "aut"),

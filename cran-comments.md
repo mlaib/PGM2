@@ -2,8 +2,9 @@
 
 ## Reason for this release
 
-This is a bug-fix release following 2.0.0, published a few days ago. It
-corrects a defect in `Uniform()` that we found after that release.
+This is a bug-fix release following 2.0.0, which CRAN published on
+2026-07-30. It corrects a defect in `Uniform()` that we found after that
+release.
 
 `Uniform()` extracted the parallel classes of a resolvable design by a
 first-fit greedy scan. That procedure can become trapped even when a
@@ -35,20 +36,21 @@ been dropped from Imports.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 3 notes
+0 errors | 0 warnings | 2 notes
 
-The notes are:
+Both notes are local environment artefacts:
 
-* "Days since last update: N", because 2.0.0 was released very recently.
-  This release exists to fix the defect described above; we are glad to
-  delay it if the CRAN team prefers.
 * "unable to verify current time" — no network clock in the local
   sandbox.
 * "Skipping checking HTML validation: no command 'tidy' found" and
   "package 'V8' unavailable" — the optional HTML-manual validation tools
   are not installed locally.
 
-None of the three appears on the GitHub Actions runs.
+Neither appears on the GitHub Actions runs.
+
+Should the incoming checks report "Days since last update", this release
+is submitted four weeks after 2.0.0 solely to correct the defect
+described above; we are glad to delay it if the CRAN team prefers.
 
 ## Tests
 
